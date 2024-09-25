@@ -17,7 +17,8 @@ overlay.addEventListener("click", function () {
 // New Transaction Page - Start
 let serviceCount = 1;
 
-document.getElementById('addServiceBtn').addEventListener('click', function() {
+if(document.getElementById('addServiceBtn')) {
+  document.getElementById('addServiceBtn').addEventListener('click', function() {
     serviceCount++;
 
     // Get the template and clone it
@@ -37,18 +38,23 @@ document.getElementById('addServiceBtn').addEventListener('click', function() {
     container.appendChild(clone);
 
     updateServiceLabels();
-});
+  });
+}
+
+
 
   // Delegate delete button clicks
-  document.getElementById('serviceInputContainer').addEventListener('click', e => {
-      if (e.target && e.target.classList.contains('delete-service-btn')) {
-          let rows = document.querySelectorAll('#serviceInputContainer .form-group');
-          if (rows.length > 1) {  // Ensure at least one row remains
-              e.target.closest('.form-group').remove();
-              updateServiceLabels();
-          }
-      }
-  });
+  if(document.getElementById('serviceInputContainer')) {
+    document.getElementById('serviceInputContainer').addEventListener('click', e => {
+        if (e.target && e.target.classList.contains('delete-service-btn')) {
+            let rows = document.querySelectorAll('#serviceInputContainer .form-group');
+            if (rows.length > 1) {  // Ensure at least one row remains
+                e.target.closest('.form-group').remove();
+                updateServiceLabels();
+            }
+        }
+    });
+  }
 
   function updateServiceLabels() {
       let rows = document.querySelectorAll('#serviceInputContainer .form-group');

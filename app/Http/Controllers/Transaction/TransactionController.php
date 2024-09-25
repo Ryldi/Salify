@@ -11,6 +11,7 @@ use App\Models\TransactionDetail;
 use App\Models\Service;
 use App\Models\Employee;
 use App\Models\EmployeeCommission;
+use DB;
 
 class TransactionController
 {
@@ -98,6 +99,40 @@ class TransactionController
 
         return redirect()->route('new_transaction')->with('success', 'Transaction success!');
     }
+
+
+    public function detail($emp_id, $month_year)
+    {
+        $employee = Employee::find($emp_id);
+
+        $month_year = date('Y-m', strtotime($month_year));
+        
+        [$year, $month] = explode('-', $month_year);
+
+        $transactions = DB::table('transaction_details')
+            ->join('transaction_headers', 'transaction_details.transaction_id', '=', 'transaction_headers.transaction_id')
+            ->join('services', 'transaction_details.service_id', '=', 'services.service_id')
+            ->where('transaction_details.emp_id', $emp_id)
+            ->whereYear('transaction_headers.transaction_date', $year)
+            ->whereMonth('transaction_headers.transaction_date', $month)
+            ->select(
+                'transaction_headers.transaction_date',
+                'transaction_headers.customer_name',
+                'services.service_name',
+                'transaction_details.service_price',
+                'transaction_details.service_quantity',
+                'transaction_details.post_commission'
+            )
+            ->orderBy('transaction_headers.transaction_date', 'asc')
+            ->get();
+
+        return view('staff_commission_detail', [
+            'employee' => $employee,
+            'month_year' => $month_year,
+            'transactions' => $transactions,
+        ]);
+    }
+
 
     /**
      * Display the specified resource.

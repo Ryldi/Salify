@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('services', function (Blueprint $table) {
-            $table->char('service_id', 36)->default(DB::raw('UUID()'))->primary();
+            $table->char('service_id', 36)->primary();
             $table->string('service_name');
         });
     }

@@ -12,4 +12,12 @@ class Employee extends Model
     public $timestamps = false;
     protected $primaryKey = 'emp_id';
     protected $keyType = 'string';
+
+    public static function boot()
+{
+    parent::boot();
+    static::creating(function ($model) {
+        $model->emp_id = (string) Str::uuid();
+    });
+}
 }

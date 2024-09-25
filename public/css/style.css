@@ -39,6 +39,10 @@ body {
     position: relative;
 }
 
+#main-content {
+    margin-left: 70px;
+}
+
 .overlay {
     position: fixed;
     top: 0;
@@ -65,7 +69,7 @@ body {
     min-width: 70px;
     z-index: 1000;
     transition: all .25s ease-in-out;
-    background-color: #67adf8;
+    background-color: #ba834f;
     display: flex;
     flex-direction: column;
 }

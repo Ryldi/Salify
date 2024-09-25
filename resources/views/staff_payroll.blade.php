@@ -1,19 +1,16 @@
-<!-- resources/views/payroll.blade.php -->
 @extends('layouts.sidebar')
 
 @section('content')
-    <div class="container">
+    <div class="container mt-5">
+        <div class="text-center mb-4">
+            <h1>Staff Payroll</h1>
+        </div>
+
         <div class="row">
             <div class="col-md-12 mb-3">
-                <!-- Search bar -->
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search...">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button">
-                            <i class="lni lni-search"></i> <!-- FontAwesome for search icon -->
-                        </button>
-                    </div>
-                </div>
+                <form action="{{ route('staff_payroll.search') }}" method="GET" class="input-group">
+                    <input type="text" name="search" class="form-control" placeholder="Search..." aria-label="Search...">
+                </form>
             </div>
 
             <!-- Staff list -->
@@ -23,7 +20,7 @@
                         <tr>
                             <th>Staff Name</th>
                             <th>Staff Role</th>
-                            <th>Action</th>
+                            <th>Details</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -32,9 +29,9 @@
                             <td>{{ $employee->emp_firstName . ' ' . $employee->emp_lastName }}</td>
                             <td>{{ $employee->emp_role }}</td>
                             <td>
-                                <a href="" class="btn btn-info">
-                                    View Commission
-                                </a>
+                                <button class="btn btn-outline-secondary" type="button">
+                                    <a href="/staff_payroll/{{ $employee->emp_id }}" class="lni lni-folder"></a>
+                                </button>
                             </td>
                         </tr>
                         @endforeach
